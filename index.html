@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+<meta charset="UTF-8">
+<title>Тест</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0;
+}
+
+.container{
+    background:white;
+    width:700px;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 0 25px rgba(0,0,0,0.2);
+    text-align:center;
+}
+
+h1{
+    color:#333;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    margin-top:15px;
+    border:none;
+    background:#4CAF50;
+    color:white;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#388E3C;
+    transform:scale(1.02);
+}
+
+#info{
+    margin-top:20px;
+    color:#555;
+    font-style:italic;
+}
+
+#result{
+    font-size:24px;
+    color:#222;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Тест на финансовую грамотность</h1>
+
+<h2 id="question"></h2>
+
+<div id="answers"></div>
+
+<p id="info"></p>
+
+<h2 id="result"></h2>
+
+</div>
+
+<script>
+
+const questions = [
+
+
+{
+question:"Что такое личный бюджет?",
+
+answers:[
+"Список покупок",
+"План доходов и расходов",
+"Банковская карта"
+],
+
+correct:1,
+
+info:"Бюджет помогает контролировать деньги."
+}, 
+
+{
+question:"Что такое накопления?",
+
+answers:[
+"Деньги, которые откладывают на будущее",
+"Случайные траты",
+"Долги перед банком"
+],
+
+correct:0,
+
+info:"Накопления помогают чувствовать себя увереннее."
+},
+
+{
+question:"Зачем нужны накопления?",
+
+answers:[
+"Для финансовой безопасности",
+"Чтобы покупать всё подряд",
+"Чтобы брать кредиты"
+],
+
+correct:0,
+
+info:"Накопления помогают в трудных ситуациях."
+},
+
+{
+question:"Для чего нужна финансовая грамотность?",
+
+answers:[
+"Чтобы правильно распоряжаться деньгами",
+"Чтобы покупать всё подряд",
+"Чтобы никогда не работать"
+],
+
+correct:0,
+
+info:"Финансовая грамотность помогает принимать разумные решения."
+},
+
+{
+question:"Почему важно планировать расходы?",
+
+answers:[
+"Чтобы не тратить слишком много",
+"Чтобы покупать всё подряд",
+"Чтобы брать больше кредитов"
+],
+
+correct:0,
+
+info:"Планирование помогает контролировать свои финансы."
+},
+
+{
+question:"Почему полезно вести учёт своих расходов?",
+
+answers:[
+"Чтобы понимать, куда уходят деньги",
+"Чтобы тратить больше",
+"Это бесполезно"
+],
+
+correct:0,
+
+info:"Учёт расходов помогает лучше управлять бюджетом."
+},
+
+{
+question:"Что лучше сделать с карманными деньгами?",
+
+answers:[
+"Сразу всё потратить",
+"Часть отложить",
+"Каждый день покупать что-то новое"
+],
+
+correct:1,
+
+info:"Даже небольшие накопления помогают научиться обращаться с деньгами."
+},
+
+{
+question:"Почему опасны кредиты?",
+
+answers:[
+"Можно накопить долги",
+"Они увеличивают зарплату",
+"Они бесплатные"
+],
+
+correct:0,
+
+info:"Кредиты нужно использовать осторожно."
+}, 
+
+{
+question:"Что может случиться, если постоянно брать кредиты?",
+
+answers:[
+"Можно накопить большие долги",
+"Можно стать миллионером",
+"Ничего не изменится"
+],
+
+correct:0,
+
+info:"Кредиты нужно использовать осторожно."
+}, 
+
+{
+question:"Какой поступок считается финансово грамотным?",
+
+answers:[
+"Покупать всё, что хочется",
+"Сравнивать цены перед покупкой",
+"Тратить все деньги сразу"
+],
+
+correct:1,
+
+info:"Сравнение цен помогает экономить деньги."
+},
+
+{
+question:"Что лучше сделать перед дорогой покупкой?",
+
+answers:[
+"Сразу купить",
+"Подумать, нужна ли она",
+"Взять несколько кредитов"
+],
+
+correct:1,
+
+info:"Не все покупки действительно необходимы."
+}
+
+
+
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const question = document.getElementById("question");
+const answers = document.getElementById("answers");
+const info = document.getElementById("info");
+const result = document.getElementById("result");
+
+function showQuestion(){
+
+let q = questions[currentQuestion];
+
+question.innerText = q.question;
+
+answers.innerHTML = "";
+
+info.innerText = q.info;
+
+q.answers.forEach((answer,index)=>{
+
+let button = document.createElement("button");
+
+button.innerText = answer;
+
+button.onclick = function(){
+
+if(index === q.correct){
+score++;
+}
+
+currentQuestion++;
+
+if(currentQuestion < questions.length){
+showQuestion();
+}
+else{
+showResult();
+}
+
+};
+
+answers.appendChild(button);
+
+});
+
+}
+
+function showResult(){
+
+question.style.display = "none";
+answers.style.display = "none";
+info.style.display = "none";
+
+let percent = Math.round((score / questions.length) * 100);
+
+let text = "";
+
+if(percent < 40){
+    text = "Ваш уровень финансовой грамотности низкий.";
+}
+else if(percent < 70){
+    text = "У вас средний уровень финансовой грамотности.";
+}
+else{
+    text = "Вы финансово грамотный человек!";
+}
+
+result.innerHTML =
+`
+<h2>Тест завершён!</h2>
+
+<p>Правильных ответов: ${score} из ${questions.length}</p>
+
+<p>Результат: ${percent}%</p>
+
+<p>${text}</p>
+`;
+
+}
+
+showQuestion();
+
+</script>
+
+</body>
+</html>
