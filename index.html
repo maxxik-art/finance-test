@@ -9,7 +9,7 @@
 
 body{
     font-family: Arial;
-    background: linear-gradient(135deg, #74ebd5, #9face6);
+   background: linear-gradient(135deg, #d4fc79, #96e6a1);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -24,6 +24,8 @@ body{
     border-radius:20px;
     box-shadow:0 0 25px rgba(0,0,0,0.2);
     text-align:center;
+    backdrop-filter: blur(10px);
+    animation:appear 1s;
 }
 
 h1{
@@ -37,7 +39,7 @@ button{
     border:none;
     background:#4CAF50;
     color:white;
-    border-radius:12px;
+    border-radius:30px;
     cursor:pointer;
     font-size:16px;
     transition:0.3s;
@@ -54,9 +56,49 @@ button:hover{
     font-style:italic;
 }
 
+#question-image{
+    width:250px;
+    border-radius:15px;
+    margin-bottom:20px;
+    transition:0.5s;
+}
+
+#question-image{
+    width:250px;
+    border-radius:15px;
+    margin-bottom:20px;
+    transition:0.5s;
+}
+
+#question{
+    font-size:28px;
+    color:#2e5e3e;
+}
+
 #result{
     font-size:24px;
     color:#222;
+}
+
+#progress{
+    font-size:18px;
+    color:#666;
+    margin-bottom:10px;
+}
+
+
+@keyframes appear{
+
+from{
+    opacity:0;
+    transform:scale(0.9);
+}
+
+to{
+    opacity:1;
+    transform:scale(1);
+}
+
 }
 
 </style>
@@ -68,6 +110,12 @@ button:hover{
 <div class="container">
 
 <h1>Тест на финансовую грамотность</h1>
+
+<button id="start-btn">Начать тест</button>
+
+<img id="question-image" src="image.webp">
+
+<p id="progress"></p>
 
 <h2 id="question"></h2>
 
@@ -84,6 +132,7 @@ button:hover{
 const questions = [
 
 
+
 {
 question:"Что такое личный бюджет?",
 
@@ -95,8 +144,42 @@ answers:[
 
 correct:1,
 
-info:"Бюджет помогает контролировать деньги."
+info:"Бюджет помогает контролировать деньги.",
+
+image:"image1.webp"
 }, 
+
+{
+question:"Для чего люди составляют бюджет?",
+
+answers:[
+"Чтобы контролировать доходы и расходы",
+"Чтобы тратить больше",
+"Чтобы покупать ненужные вещи"
+],
+
+correct:0,
+
+info:"Бюджет помогает понимать, куда уходят деньги.",
+
+image:"money8.jpg"
+},
+
+{
+question:"Как ты обычно распоряжаешся своим бюджетом?",
+
+answers:[
+"Несколько раз думаю, прежде чем что то купить",
+"Покупаю всё, что хочется",
+"Не слежу за своими расходами"
+],
+
+correct:0,
+
+info:"Твой бюджет - твоя ответсвенность.",
+
+image:"money9.jpg"
+},
 
 {
 question:"Что такое накопления?",
@@ -109,7 +192,9 @@ answers:[
 
 correct:0,
 
-info:"Накопления помогают чувствовать себя увереннее."
+info:"Накопления помогают чувствовать себя увереннее.",
+
+image:"image2.jpg"
 },
 
 {
@@ -123,7 +208,25 @@ answers:[
 
 correct:0,
 
-info:"Накопления помогают в трудных ситуациях."
+info:"Накопления помогают в трудных ситуациях.",
+
+image:"image3.png"
+},
+
+{
+question:"Что может помочь накопить деньги?",
+
+answers:[
+"Регулярно откладывать небольшие суммы",
+"Покупать всё, что хочется",
+"Не следить за расходами"
+],
+
+correct:0,
+
+info:"Даже маленькие накопления со временем растут.",
+
+image:"image9.jpg"
 },
 
 {
@@ -137,7 +240,9 @@ answers:[
 
 correct:0,
 
-info:"Финансовая грамотность помогает принимать разумные решения."
+info:"Финансовая грамотность помогает принимать разумные решения.",
+
+image:"image4.jpg" 
 },
 
 {
@@ -183,6 +288,38 @@ info:"Даже небольшие накопления помогают науч
 },
 
 {
+question:"Что такое финансовая цель?",
+
+answers:[
+"План, на что накопить деньги",
+"Случайные траты",
+"Любая покупка"
+],
+
+correct:0,
+
+info:"Финансовые цели помогают разумно распоряжаться деньгами.",
+
+image:"image12.avif"
+},
+
+{
+question:"Что из этого считается хорошей привычкой?",
+
+answers:[
+"Откладывать часть денег",
+"Покупать всё подряд",
+"Игнорировать цены"
+],
+
+correct:0,
+
+info:"Даже небольшие накопления со временем становятся полезными.",
+
+image:"image10.jpg"
+},
+
+{
 question:"Почему опасны кредиты?",
 
 answers:[
@@ -211,6 +348,54 @@ info:"Кредиты нужно использовать осторожно."
 }, 
 
 {
+question:"Почему важно читать информацию перед оформлением кредита?",
+
+answers:[
+"Чтобы понимать условия",
+"Это не имеет значения",
+"Чтобы быстрее потратить деньги"
+],
+
+correct:0,
+
+info:"Перед любыми финансовыми решениями важно изучать условия.",
+
+image:"image6.jpg"
+},
+
+{
+question:"Что лучше сделать перед покупкой дорогой вещи?",
+
+answers:[
+"Сразу купить",
+"Сравнить цены",
+"Потратить все деньги"
+],
+
+correct:1,
+
+info:"Сравнение цен помогает не переплачивать.",
+
+image:"image7.avif"
+},
+
+{
+question:"Почему не стоит тратить все деньги сразу?",
+
+answers:[
+"Могут появиться неожиданные расходы",
+"Так делают только взрослые",
+"Это запрещено"
+],
+
+correct:0,
+
+info:"Всегда полезно иметь запас денег.",
+
+image:"image5.avif"
+},
+
+{
 question:"Какой поступок считается финансово грамотным?",
 
 answers:[
@@ -225,6 +410,22 @@ info:"Сравнение цен помогает экономить деньги
 },
 
 {
+question:"Как можно уменьшить лишние расходы?",
+
+answers:[
+"Планировать покупки",
+"Покупать всё по рекламе",
+"Тратить деньги сразу после получения"
+],
+
+correct:0,
+
+info:"Планирование помогает экономить деньги.",
+
+image:"image8.png"
+},
+
+{
 question:"Что лучше сделать перед дорогой покупкой?",
 
 answers:[
@@ -236,6 +437,22 @@ answers:[
 correct:1,
 
 info:"Не все покупки действительно необходимы."
+},
+
+{
+question:"Что лучше сделать, если не хватает денег на покупку?",
+
+answers:[
+"Подождать и накопить",
+"Сразу занять у всех знакомых",
+"Потратить последние деньги"
+],
+
+correct:0,
+
+info:"Иногда лучше подождать, чем принимать поспешные решения.",
+
+image:"image11.png"
 }
 
 
@@ -250,10 +467,16 @@ const question = document.getElementById("question");
 const answers = document.getElementById("answers");
 const info = document.getElementById("info");
 const result = document.getElementById("result");
+const progress = document.getElementById("progress");
+const image = document.getElementById("question-image");
 
 function showQuestion(){
 
 let q = questions[currentQuestion];
+
+progress.innerText = `Вопрос ${currentQuestion + 1} из ${questions.length}`;
+
+image.src = q.image;
 
 question.innerText = q.question;
 
@@ -323,7 +546,23 @@ result.innerHTML =
 
 }
 
-showQuestion();
+const startBtn = document.getElementById("start-btn");
+
+question.style.display = "none";
+answers.style.display = "none";
+info.style.display = "none";
+
+startBtn.onclick = function(){
+
+    startBtn.style.display = "none";
+
+    question.style.display = "block";
+    answers.style.display = "block";
+    info.style.display = "block";
+
+    showQuestion();
+
+};
 
 </script>
 
